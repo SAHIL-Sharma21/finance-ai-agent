@@ -2,10 +2,16 @@
   "name": "finance_agent",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "dev": "bun run agent.ts"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "groq-sdk": "^0.26.0"
   }
 }
