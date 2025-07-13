@@ -9,7 +9,7 @@ type TotalExpense = {
 }
 
 export function getTotalExpense({from, to}: TotalExpense){
-    console.log("Calling totoal expense tool")
+    console.log("Calling total expense tool")
 
     // we have to call Database
     return "10000";
