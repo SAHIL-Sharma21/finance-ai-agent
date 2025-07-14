@@ -1,10 +1,13 @@
 import Groq from 'groq-sdk';
 import {getTotalExpense} from './tools/getExpense';
+import {addExpense} from './tools/addExpense';
 
 const groq = new Groq({apiKey: process.env.GROQ_API_KEY});
 
-async function callAgent(){
+//  DB init
+export const expenseDB: any = []
 
+async function callAgent(){
     const messages: any[] = [
         {
             role: "system",
@@ -19,7 +22,7 @@ async function callAgent(){
 
     messages.push({
         role: "user",
-        content: "How much money I have spent in this month?"
+        content: "I bought a iphone for 90000 INR."
     });
 
 
@@ -47,7 +50,27 @@ async function callAgent(){
                         }
                     }
                 }
-            }
+            },
+            {
+                type: "function",
+                function: {
+                    name: 'addExpense',
+                    description: "Add new expense entry to expense database.",
+                    parameters: {
+                        type: "object",
+                        properties: {
+                            name: {
+                                type: "string",
+                                description:"Name of the expense. e.g., Bought an macbook."
+                            },
+                            amount: {
+                                type: "string",
+                                description: "Amount of the expense to be added."
+                            }
+                        }
+                    }
+                }
+            },
         ],
     });
 
@@ -63,10 +86,12 @@ async function callAgent(){
         const functionName = tool.function.name;
         const functionArgs = JSON.parse(tool.function.arguments);
 
-        let result = ""
+        let result: any = ""
 
         if(functionName ===  "getTotalExpense"){
              result = getTotalExpense({from: functionArgs.from, to: functionArgs.to});
+        } else if(functionName === "addExpense"){
+            result = addExpense({name: functionArgs.name, amount: functionArgs.amount});
         }
 
         messages.push({
@@ -79,6 +104,8 @@ async function callAgent(){
 
     console.log("======================")
     console.log("MESSAGES", messages);
+    console.log("======================");
+    console.log("DB: ", expenseDB);
     }
 
 }
