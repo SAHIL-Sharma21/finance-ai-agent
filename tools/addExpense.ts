@@ -9,7 +9,7 @@ type AddAmount = {
 }
 
 export function addExpense({ name,amount}: AddAmount){
-    console.log(`Adding ${amount} to expense db for ${name}`)
+    // console.log(`Adding ${amount} to expense db for ${name}`)
 
     expenseDB.push({
         name,
