@@ -12,6 +12,6 @@ type IncomeDB = {
 }
 
 export function addIncome({name, amount}: IncomeDB){
-    incomeDB.push({name, amount});
+    incomeDB.push({name, amount: Number(amount)});
     return 'Added income to the income DB.'
 }
