@@ -2,11 +2,18 @@ import Groq from "groq-sdk";
 import { getTotalExpense } from "./tools/getExpense";
 import { addExpense } from "./tools/addExpense";
 import readline from "readline/promises";
+import { addIncome } from "./tools/addIncome";
+import { getMoneyBalance } from "./tools/getMoneyBalance";
+
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 //  DB init
 export const expenseDB: any = [];
+
+// Incone Database
+export const incomeDB: any = []
+
 
 async function callAgent() {
   // terminal I/O
@@ -26,6 +33,8 @@ async function callAgent() {
                 You have access to following tools:
                 1. getTotalExpense({from, to}): string // Get total expense for a time period.
                 2. addExpense({name, amount}): string // add new expense to the expense database.
+                3. addIncome({name, amount}): string // add new income to the income database.
+                4. getMoneyBalance(): string  // Get remainig money balance from your database.
                 current datetime: ${new Date().toUTCString()}.
             `,
     },
@@ -91,6 +100,34 @@ async function callAgent() {
               },
             },
           },
+          {
+            type: "function",
+            function: {
+              name: "addIncome",
+              description: "Add new income entry to income database.",
+              parameters: {
+                type: "object",
+                properties: {
+                  name: {
+                    type: "string",
+                    description:
+                      "Name of the income. e.g. Got salary.",
+                  },
+                  amount: {
+                    type: "string",
+                    description: "Amount of the income to be added.",
+                  },
+                },
+              },
+            },
+          },
+          {
+            type: "function",
+            function: {
+              name: "getMoneyBalance",
+              description: "Get remainig money balance from your database.",
+            },
+          },
         ],
       });
 
@@ -118,6 +155,13 @@ async function callAgent() {
             name: functionArgs.name,
             amount: functionArgs.amount,
           });
+        } else if(functionName === "addIncome"){
+          result = addIncome({
+            name: functionArgs.name,
+            amount: functionArgs.amount
+          });
+        } else if(functionName === "getMoneyBalance"){
+          result = getMoneyBalance();
         }
 
         messages.push({
