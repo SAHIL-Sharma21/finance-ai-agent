@@ -4,7 +4,7 @@
  *
  */
 
-import { incomeDB } from "../agent";
+import {addIncomeDB} from '../database';
 
 type IncomeDB = {
     name: string;
@@ -12,6 +12,8 @@ type IncomeDB = {
 }
 
 export function addIncome({name, amount}: IncomeDB){
-    incomeDB.push({name, amount: Number(amount)});
-    return 'Added income to the income DB.'
+    return addIncomeDB({
+        name,
+        amount: typeof amount === "string" ? parseFloat(amount) : amount
+    });
 }

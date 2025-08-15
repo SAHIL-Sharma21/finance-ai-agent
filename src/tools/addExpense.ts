@@ -1,4 +1,4 @@
-import { expenseDB } from "../agent";
+import {addExpenseDB} from '../database';
 
 /**
  * Add expense tools to add the expense in the database;
@@ -9,12 +9,8 @@ type AddAmount = {
 }
 
 export function addExpense({ name,amount}: AddAmount){
-    // console.log(`Adding ${amount} to expense db for ${name}`)
-
-    expenseDB.push({
-        name,
-        amount
+    return addExpenseDB({
+        name, 
+        amount: typeof amount === "string" ? parseFloat(amount) : amount
     });
-
-    return "Added to the expense db."
 }

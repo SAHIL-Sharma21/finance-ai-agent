@@ -1,9 +1,9 @@
 import Groq from "groq-sdk";
-import { getTotalExpense } from "./tools/getExpense";
-import { addExpense } from "./tools/addExpense";
+import { getTotalExpense } from "./src/tools/getExpense";
+import { addExpense } from "./src/tools/addExpense";
 import readline from "readline/promises";
-import { addIncome } from "./tools/addIncome";
-import { getMoneyBalance } from "./tools/getMoneyBalance";
+import { addIncome } from "./src/tools/addIncome";
+import { getMoneyBalance } from "./src/tools/getMoneyBalance";
 
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
