@@ -1,5 +1,13 @@
 # Based on https://raw.githubusercontent.com/github/gitignore/main/Node.gitignore
 
+# Database files
+
+*.db
+*.sqlite
+*.sqlite3
+db/
+./db/finance.db
+
 # Logs
 
 logs
