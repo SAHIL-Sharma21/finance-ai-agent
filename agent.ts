@@ -57,7 +57,7 @@ async function callAgent() {
     while (true) {
       const completion = await groq.chat.completions.create({
         messages: messages,
-        model: "llama-3.3-70b-versatile",
+        model: "openai/gpt-oss-20b",
         tools: [
           {
             type: "function",
@@ -170,11 +170,6 @@ async function callAgent() {
           tool_call_id: tool.id,
         });
       }
-
-      //   console.log("======================");
-      //   console.log("MESSAGES", messages);
-      //   console.log("======================");
-      //   console.log("DB: ", expenseDB);
     }
   }
 
