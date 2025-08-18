@@ -87,7 +87,7 @@ export async function getAllExpenseDB() {
   }
 }
 
-export async function getAllIncome() {
+export async function getAllIncomeDB() {
   try {
     const result = db.query("SELECT * FROM income ORDER BY date DESC").all();
     return result;
