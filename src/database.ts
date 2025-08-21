@@ -35,7 +35,7 @@ type AddAmount = {
 };
 export async function addExpenseDB({ name, amount }: AddAmount) {
   try {
-    if (!name && !amount) return;
+    if (!name || !amount) return "Name and Amount is required."
 
     db.run("INSERT INTO expenses (name, amount) VALUES (?, ?)", [name, amount]);
     return "expense added to the DB.";
@@ -52,6 +52,9 @@ export async function addIncomeDB({
   amount: number | string;
 }) {
   try {
+    if(!name || !amount) return "Name and Anount is required."
+
+
     db.run("INSERT INTO income (name, amount) VALUES (?, ?)", [name, amount]);
     return "Income is added to the Income DB.";
   } catch (err) {

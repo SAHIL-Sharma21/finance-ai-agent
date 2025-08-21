@@ -6,25 +6,25 @@ const app = new Elysia()
   .get("/health", () => ({ status: 200, message: "Server is healthy" }))
   .post(
     "/api/expense",
-    ({ body }: { body: { name: string; amount: number | string } }) => {
-      const result = addExpenseDB(body);
+    async ({ body }: { body: { name: string; amount: number | string } }) => {
+      const result = await addExpenseDB(body);
       return { success: true, message: result };
     }
   )
-  .post("/api/income", ({body}: {body: {name: string, amount: number | string}}) => {
-    const result = addIncomeDB(body);
+  .post("/api/income", async ({body}: {body: {name: string, amount: number | string}}) => {
+    const result = await addIncomeDB(body);
     return {success: true, message: result};
   })
-  .get("/api/getmoney-balance", () => {
-    const result = getMoneyBalanceDB();
+  .get("/api/balance", async () => {
+    const result = await getMoneyBalanceDB();
     return {success: true, message: result}
   })
-  .get("/api/getexpense", () => {
-    const result = getAllExpenseDB()
+  .get("/api/expense", async () => {
+    const result = await getAllExpenseDB()
     return {success: true, message: result}
   })
-  .get("/api/getAllIncome", () => {
-    const result = getAllIncomeDB();
+  .get("/api/income", async () => {
+    const result = await getAllIncomeDB();
     return {success: true, message: result}
   })
   .listen(3001);
