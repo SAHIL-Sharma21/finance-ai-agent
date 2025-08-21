@@ -33,6 +33,21 @@ type AddAmount = {
   name: string;
   amount: string | number;
 };
+
+interface Expense {
+  id: number;
+  name: string;
+  amount: number;
+  date: string | Date;
+}
+
+interface Income {
+  id: number;
+  name: string;
+  amount: number;
+  date: string | Date;
+}
+
 export async function addExpenseDB({ name, amount }: AddAmount) {
   try {
     if (!name || !amount) return "Name and Amount is required."
@@ -41,6 +56,7 @@ export async function addExpenseDB({ name, amount }: AddAmount) {
     return "expense added to the DB.";
   } catch (err) {
     console.error("Error", err);
+    return "Error: Unable to add expense."
   }
 }
 
@@ -59,6 +75,7 @@ export async function addIncomeDB({
     return "Income is added to the Income DB.";
   } catch (err) {
     console.error("Error: ", err);
+    return "Error: Unable to add Income."
   }
 }
 
@@ -77,12 +94,14 @@ export async function getMoneyBalanceDB() {
     return `Current balance is ${(totalIncome - totalExpense).toFixed(2)} INR`;
   } catch (err) {
     console.error("Error: ", err);
+    return "Error: Unable to get money balance."
   }
 }
 
-export async function getAllExpenseDB() {
+export async function getAllExpenseDB(): Promise<Expense[]> {
   try {
-    const results = db.query("SELECT * FROM expenses ORDER BY date DESC").all();
+    const results = db.query("SELECT * FROM expenses ORDER BY date DESC").all() as Expense[];
+    console.log("all expense-->", results);
     return results;
   } catch (err) {
     console.error("Error ", err);
@@ -90,9 +109,9 @@ export async function getAllExpenseDB() {
   }
 }
 
-export async function getAllIncomeDB() {
+export async function getAllIncomeDB(): Promise<Income[]> {
   try {
-    const result = db.query("SELECT * FROM income ORDER BY date DESC").all();
+    const result = db.query("SELECT * FROM income ORDER BY date DESC").all() as Income[];
     return result;
   } catch (err) {
     console.error("Error ", err);

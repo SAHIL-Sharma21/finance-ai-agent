@@ -146,27 +146,27 @@ async function callAgent() {
         let result: any = "";
 
         if (functionName === "getTotalExpense") {
-          result = getTotalExpense({
+          result =  getTotalExpense({
             from: functionArgs.from,
             to: functionArgs.to,
           });
         } else if (functionName === "addExpense") {
-          result = addExpense({
+          result =  addExpense({
             name: functionArgs.name,
             amount: functionArgs.amount,
           });
         } else if(functionName === "addIncome"){
-          result = addIncome({
+          result =  addIncome({
             name: functionArgs.name,
             amount: functionArgs.amount
           });
         } else if(functionName === "getMoneyBalance"){
-          result = getMoneyBalance();
+          result =  getMoneyBalance();
         }
 
         messages.push({
           role: "tool",
-          content: result,
+          content: typeof result === "string" ? result: JSON.stringify(result),
           tool_call_id: tool.id,
         });
       }

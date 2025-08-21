@@ -8,24 +8,24 @@ const app = new Elysia()
     "/api/expense",
     async ({ body }: { body: { name: string; amount: number | string } }) => {
       const result = await addExpenseDB(body);
-      return { success: true, message: result };
+      return { success: true, data: result };
     }
   )
   .post("/api/income", async ({body}: {body: {name: string, amount: number | string}}) => {
     const result = await addIncomeDB(body);
-    return {success: true, message: result};
+    return {success: true, data: result};
   })
   .get("/api/balance", async () => {
     const result = await getMoneyBalanceDB();
-    return {success: true, message: result}
+    return {success: true, data: result}
   })
   .get("/api/expense", async () => {
     const result = await getAllExpenseDB()
-    return {success: true, message: result}
+    return {success: true, data: result}
   })
   .get("/api/income", async () => {
     const result = await getAllIncomeDB();
-    return {success: true, message: result}
+    return {success: true, data: result}
   })
   .listen(3001);
 
